@@ -1,18 +1,14 @@
+import org.example.pages.FooterPage;
 import org.example.pages.MainPage;
 import org.example.pages.OrderPage;
-import org.junit.After;
 import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
-import static org.hamcrest.CoreMatchers.containsString;
 
 @RunWith(Parameterized.class)
-public class ScooterOrder {
+public class ScooterOrder extends BaseTest {
 
-    private WebDriver driver;
     private final String orderButton;
     private final String name;
     private final String lastname;
@@ -41,33 +37,21 @@ public class ScooterOrder {
         };
     }
 
-    @org.junit.Test
+    @Test
     public void checkScooterOrder() {
 
-//        ChromeOptions options = new ChromeOptions();
-//        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
-//        driver = new ChromeDriver(options);
-
-        FirefoxOptions options = new FirefoxOptions();
-        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
-        driver = new FirefoxDriver(options);
-
         MainPage objMainPage = new MainPage(driver);
-
         objMainPage.openMainPage();
+
         objMainPage.clickOrderButton(orderButton);
+
+        FooterPage objFooterPage = new FooterPage(driver);
+        objFooterPage.clickAgreeCookies();
 
         OrderPage objOrderPage = new OrderPage(driver);
         objOrderPage.makeOrder(name, lastname, address, metroStation, phone, rentalPeriod, scooterColor);
 
-        Assert.assertThat(objOrderPage.getSuccessCreatedOrderText(), containsString("Заказ оформлен"));
+        Assert.assertEquals(true, objOrderPage.getSuccessCreatedOrderText().contains("Заказ оформлен"));
 
-    }
-
-    @After
-    public void tearDown() {
-        if (driver != null) {
-            driver.close();
-        }
     }
 }

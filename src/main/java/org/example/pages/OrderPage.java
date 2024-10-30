@@ -15,9 +15,6 @@ public class OrderPage {
         this.driver = driver;
     }
 
-    // кнопка согласия на cookies
-    private By cookiesAgree = By.className("App_CookieButton__3cvqF");
-
     // форма заказа
     private By orderForm = By.className("Order_Content__bmtHS");
 
@@ -87,16 +84,15 @@ public class OrderPage {
         new WebDriverWait(driver, Duration.ofSeconds(1))
                 .until(ExpectedConditions.visibilityOfElementLocated(orderForm));
 
-        driver.findElement(cookiesAgree).click();
         driver.findElement(nameField).sendKeys(name);
         driver.findElement(lastnameField).sendKeys(lastname);
         driver.findElement(addressField).sendKeys(address);
         driver.findElement(metroStationField).click();
         driver.findElement(metroStationField).sendKeys(metroStation);
-        new WebDriverWait(driver, Duration.ofSeconds(7))
-                .until(ExpectedConditions.visibilityOfElementLocated(metroDropdown));
         driver.findElement(metroDropdownFirstItem).click();
         driver.findElement(phoneField).sendKeys(phone);
+        new WebDriverWait(driver, Duration.ofSeconds(3))
+                .until(ExpectedConditions.visibilityOfElementLocated(nextButton));
         driver.findElement(nextButton).click();
 
 

@@ -53,6 +53,8 @@ public class MainPage {
 
     public String getArrowDropDownText(String arrowNumber) {
         scrollToImportantQuestions();
+        new WebDriverWait(driver, Duration.ofSeconds(1))
+                .until(ExpectedConditions.visibilityOfElementLocated(importantQuestions));
         clickArrow(arrowNumber);
         By dropDownElement = getArrowDropDownXpath(arrowNumber);
         new WebDriverWait(driver, Duration.ofSeconds(1))
